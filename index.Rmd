@@ -5,39 +5,76 @@ output: html_document
 
 ### Introduction
 
-An introduction of the data and a description of the trends/books/items you are choosing to analyze (and why!)
+The dataset that I chose to analyze is of my favorite childhood book series, Diary of a Wimpy Kid. The dataset provides information in regards to how often the books under this series got checked out from 2008 to 2023. It provides information on the type of book that got checked out - digital or physical, ebook, physical book, videodisc, audiobook, and sounddisc. It also provides information on how many checkouts took place in a respective month in a respective year, the name of the book being checked out, ISBN number, creator name, the subject the book falls under, publisher and publication year. 
+The reason I chose this book series is because they were my favorite growing up and I remember how my friends and classmates used to go crazy when a new book came out, it became like a collector's thing haha. It was definitely popular when I was a child, but I want to see if the popularity stayed with the next generation of kids - did it become more poular, less popular, and how are they reading them? Popularity is the main trend I hope to analyze through this assigment. 
 
 ### Summary Information
+```{r, echo = FALSE, code = readLines("summary.R")}
+library(dplyr)
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
+
+#The book I found my dataset on is Diary of a Wimpy Kid
+
+wimpy_kid_data <- read.csv("~/Downloads/Wimpykid.csv")
+
+#1 Which year had the most checkouts? 
+most_year_checkouts <- wimpy_kid_data %>% group_by(CheckoutYear) %>% summarize(total_checkouts = sum(Checkouts)) %>%  filter(total_checkouts == max(total_checkouts)) %>% pull(CheckoutYear)
+
+#2 Which year had the least checkouts? 
+min_year_checkouts <- wimpy_kid_data %>% group_by(CheckoutYear) %>% summarize(total_checkouts = sum(Checkouts)) %>%  filter(total_checkouts == min(total_checkouts)) %>% pull(CheckoutYear)
+
+#3 How many physical copies were checked out?
+physicaL_check <- wimpy_kid_data %>% filter(UsageClass == "Physical") %>% summarize(total = sum(Checkouts)) %>% pull(total)
+
+#4 How many digital copies were checked out? 
+digital_check <- wimpy_kid_data %>% filter(UsageClass == "Digital") %>% summarize(total = sum(Checkouts)) %>% pull(total)
+
+#5 What is the average number of ebook checkouts? 
+avg_ebooks <- wimpy_kid_data %>% filter(MaterialType == "EBOOK") %>% summarize(mean_checkouts = mean(Checkouts)) %>% pull(mean_checkouts)
+```
+I wanted to get a general overview of the popularity trend of this book series. So, I decided to find out the year which had the least checkouts and the year which had the most. Year with the most was **`most_year_checkouts`** and the one with the least was **`min_year_checkouts`**. Solely based on this information, looks like the book series is still relevant till date and is popular amongst the new generation. Next, I wanted to learn how many of these checkout were digital and physical, and which one was more.Total physical copies checked out were **`physical_check`** and total digital copies checked out were **`digital_check`**. Looks like more digital copies were checked out and this signifies how the realm of digital media is picking up quickly when it comes to books. I also wanted to know what were the average number of ebooks being checked out, as I immediately thought of Kindle when I was analyzing digital vs physical. The average number was **`avg_ebooks`**, which I feel is a bit low. Looks like ebooks aren't that poular and maybe people prefer audiobooks or discs more. 
 
 These will likely be calculated using your DPLYR skills, answering questions such as:
-
-- What is the average number of checkouts for each item?
-- What is the month or year with the most/least checkouts for a book that you're interested in?
-- What is the month or year with the most/least checkouts for ebooks?
-- How has the number of print book checkouts changed over time?
+- Which year had the most checkouts? 
+- Which year had the least checkouts? 
+- How many physical copies were checked out?
+- How many digital copies were checked out?
+- What is the average number of ebook checkouts? 
 
 Feel free to calculate and report values that you find relevant.
 
 ### The Dataset
 
 - Who collected/published the data?  
+This data was published by Seattle Open Data 
+
 - What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
+The datset has the following parameters - usageclass(if its a physcial or digital copy), type of checkout, the material of the item being checked out, checkout year, checkout month, number of checkouts, the title of the thing being checked out, book's ISBN, creator name, publisher name, and publication year. 
+
 - How was the data collected or generated?  
-- Why was the data collected?  
-- What, if any, ethical questions do you need to consider when working with this data?  
+Seattle Open Data collects data from the city of Seattle and publishes it for the use of the general public. This specifc dataset was collected from Seattle Public Library(SPL). SPL collects data by keeping a track of item checkouts and the parameters mentioned above, you can't take an item out without checking it out through their system. Each checkout is automatically added to a larger dataset and this dataset is collected by Seattle Open Data. 
+
+- Why was the data collected?
+I beleive this data was collected by SPL to have a much better understanding of their inventory or number of items currently in stock. It allows them to keep a track of all items and improves efficiency. It also allows them to take neccessary action if certain items are missing or unaccounted for. This data is then collected by Seattle Open Data to allow the general public to acces it and make them more aware of how, in this case SPL, works and operates, thereby making them more in control of their own city. 
+
+- What, if any, ethical questions do you need to consider when working with this data?
+In the case of data that relates to the Diary of a Wimpy Kid book series, I don't think any major ethical questions arise. A miinor thing could be if all items are actually being accounted for, that is, whether each item being checked out from SPL is actually being put into the system, how accurate can it be?
+
 - What are possible limitations or problems with this data?   (at least 200 words)
+As of now, there aren't any major limitations that I think will arise. 
+However, there could be limitations or problems with Seattle Open Data. 
+Some data sets may have missing values or be out of date, which could lead to incorrect analysis or conclusions. Its hard to be 100% sure that during the process of collecting data from SPL, each and every data element was successfully collected and nothing was lost during the process. Its hard to be certain of the dataset's completeness. If this stands true for the dataset I chose, my analysis too will be incomplete. I may get my answers, but what if the missing data could really change or divert my answers and reasonings, I will probably never know. 
 
 
 ### First Trends Over Time Chart
+In the first chart, I wanted to analyze trends between the physical and digital copies being checked out. The reason behind this was to have a better understanding about the shift to technology and digital media in a realm as ancient as that of books. The chart definitely tells an interesting story. It shows that digital copies started checking out from 2013 onwards and skyrocketed to beat the numbers of the physical copies being checked out at the same time. Difference between them is massive. Looks like after 2020 the gap became massive, thanks to the pandemic forcing everyone to shift online. There is a sharp drop after 2022 because the year 2023 just began and the data being collected is still small, only related to one month, and is in its initial stage, so its probably best to disregard that.
 
 Include a chart. Make sure to describe why you included the chart, and what patterns emerged
 
 The first chart that you will create and include will show the trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
 
 - Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
+-  For example, two books, or 5 different mediums
 - You must have clear x and y axis labels
 - The chart needs a clear title 
 - You need a legend for your different line colors and a clear - legend title
@@ -47,10 +84,12 @@ When we say "clear" or "human readable" titles and labels, that means that you s
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-``````{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
+```{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
+read.delim("chart1_example.R")
 ```
 
 ### Second Trends Over Time Chart
+In my second chart, I wanted to compare and analyze trends of the number of ebooks, audiobooks, and physical books being checked out. From the chart above, we learnt that number of digital copies being checked out are way more than physical books, but I wanted to know the contribution of two popular mediums of digital copies - ebooks and audiobooks. the amount of promotions I have seen for audiobooks and ebooks is insane, but I wanted to learn which one did a better job of attracting more consumers. After seeing the graph, it looks like ebooks is a clear winner. Audiobooks were checked out more than physical books, but it didn't come close to the numbers of ebooks. Looks like people still prefer reading books over listening. 
 
 Include a chart. Make sure to describe why you included the chart, and what patterns emerged
 
@@ -71,6 +110,7 @@ Here's an example of how to run an R script inside an RMarkdown file:
 ```
 
 ### Your Choice
+My third chart is a bit more personal. Growing up, 'Rodrick Rules' used to be my favorite book in the Diary of a Wimpy Kid series. I wanted to analyze its growth/decline in popularity over the years and understand if its still considered a good book in the series by the new generation of children. From the chart, we can see that the popularity has been growing. The growth was slow up till 2019, and peaked in 2021.The number of checkouts were way more in 2021 than 2020. Looks like the I am not the only one who thinks this is one of the best books in the series. 
 
 The last chart is up to you. It could be a line plot, scatter plot, histogram, bar plot, stacked bar plot, and more. Here are some requirements to help guide your design:
 
@@ -81,6 +121,7 @@ The last chart is up to you. It could be a line plot, scatter plot, histogram, b
 Here's an example of how to run an R script inside an RMarkdown file:
 
 ``````{r, echo = FALSE, code = readLines("chart2_example.R")}
+read.delim("Chart3.R")
 ```
 
 
