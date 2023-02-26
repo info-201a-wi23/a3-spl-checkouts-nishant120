@@ -32,16 +32,12 @@ digital_check <- wimpy_kid_data %>% filter(UsageClass == "Digital") %>% summariz
 #5 What is the average number of ebook checkouts? 
 avg_ebooks <- wimpy_kid_data %>% filter(MaterialType == "EBOOK") %>% summarize(mean_checkouts = mean(Checkouts)) %>% pull(mean_checkouts)
 ```
-I wanted to get a general overview of the popularity trend of this book series. So, I decided to find out the year which had the least checkouts and the year which had the most. Year with the most was **`most_year_checkouts`** and the one with the least was **`min_year_checkouts`**. Solely based on this information, looks like the book series is still relevant till date and is popular amongst the new generation. Next, I wanted to learn how many of these checkout were digital and physical, and which one was more.Total physical copies checked out were **`physical_check`** and total digital copies checked out were **`digital_check`**. Looks like more digital copies were checked out and this signifies how the realm of digital media is picking up quickly when it comes to books. I also wanted to know what were the average number of ebooks being checked out, as I immediately thought of Kindle when I was analyzing digital vs physical. The average number was **`avg_ebooks`**, which I feel is a bit low. Looks like ebooks aren't that poular and maybe people prefer audiobooks or discs more. 
 
-These will likely be calculated using your DPLYR skills, answering questions such as:
-- Which year had the most checkouts? 
-- Which year had the least checkouts? 
-- How many physical copies were checked out?
-- How many digital copies were checked out?
-- What is the average number of ebook checkouts? 
+```{r, echo = FALSE, message = TRUE}
+source("summary.R")
+```
+I wanted to get a general overview of the popularity trend of this book series. So, I decided to find out the year which had the least checkouts and the year which had the most. Year with the most was **`r most_year_checkouts`** and the one with the least was **`r min_year_checkouts`**. Solely based on this information, looks like the book series is still relevant till date and is popular amongst the new generation. Next, I wanted to learn how many of these checkout were digital and physical, and which one was more.Total physical copies checked out were **`r physicaL_check`** and total digital copies checked out were **`r digital_check`**. Looks like more digital copies were checked out and this signifies how the realm of digital media is picking up quickly when it comes to books. I also wanted to know what were the average number of ebooks being checked out, as I immediately thought of Kindle when I was analyzing digital vs physical. The average number was **`r avg_ebooks`**, which I feel is a bit low. Looks like ebooks aren't that poular and maybe people prefer audiobooks or discs more. 
 
-Feel free to calculate and report values that you find relevant.
 
 ### The Dataset
 
@@ -68,60 +64,22 @@ Some data sets may have missing values or be out of date, which could lead to in
 
 ### First Trends Over Time Chart
 In the first chart, I wanted to analyze trends between the physical and digital copies being checked out. The reason behind this was to have a better understanding about the shift to technology and digital media in a realm as ancient as that of books. The chart definitely tells an interesting story. It shows that digital copies started checking out from 2013 onwards and skyrocketed to beat the numbers of the physical copies being checked out at the same time. Difference between them is massive. Looks like after 2020 the gap became massive, thanks to the pandemic forcing everyone to shift online. There is a sharp drop after 2022 because the year 2023 just began and the data being collected is still small, only related to one month, and is in its initial stage, so its probably best to disregard that.
-
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The first chart that you will create and include will show the trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
--  For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-```{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
-read.delim("chart1_example.R")
+```{r, echo = FALSE, code = readLines("chart1_example.R")}
 ```
+
 
 ### Second Trends Over Time Chart
 In my second chart, I wanted to compare and analyze trends of the number of ebooks, audiobooks, and physical books being checked out. From the chart above, we learnt that number of digital copies being checked out are way more than physical books, but I wanted to know the contribution of two popular mediums of digital copies - ebooks and audiobooks. the amount of promotions I have seen for audiobooks and ebooks is insane, but I wanted to learn which one did a better job of attracting more consumers. After seeing the graph, it looks like ebooks is a clear winner. Audiobooks were checked out more than physical books, but it didn't come close to the numbers of ebooks. Looks like people still prefer reading books over listening. 
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The second chart that you will create and include will show another trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
 
 ``````{r, echo = FALSE, code = readLines("chart2_example.R")}
 ```
 
-### Your Choice
+### 3rd Chart
 My third chart is a bit more personal. Growing up, 'Rodrick Rules' used to be my favorite book in the Diary of a Wimpy Kid series. I wanted to analyze its growth/decline in popularity over the years and understand if its still considered a good book in the series by the new generation of children. From the chart, we can see that the popularity has been growing. The growth was slow up till 2019, and peaked in 2021.The number of checkouts were way more in 2021 than 2020. Looks like the I am not the only one who thinks this is one of the best books in the series. 
 
-The last chart is up to you. It could be a line plot, scatter plot, histogram, bar plot, stacked bar plot, and more. Here are some requirements to help guide your design:
 
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart2_example.R")}
-read.delim("Chart3.R")
+``````{r, echo = FALSE, code = readLines("Chart3.R")}
 ```
 
 

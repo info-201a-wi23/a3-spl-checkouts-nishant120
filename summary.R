@@ -21,12 +21,4 @@ digital_check <- wimpy_kid_data %>% filter(UsageClass == "Digital") %>% summariz
 #5 What is the average number of ebook checkouts? 
 avg_ebooks <- wimpy_kid_data %>% filter(MaterialType == "EBOOK") %>% summarize(mean_checkouts = mean(Checkouts)) %>% pull(mean_checkouts)
 
-if(physicaL_check > digital_check){
-  print("Physical")
-} else if (digital_check > physicaL_check){
-  print("Digital")
-} else {
-  print("Equal")
-}
-
 
